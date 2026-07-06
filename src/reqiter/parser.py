@@ -13,6 +13,7 @@ def init_parser():
 
     random_group = parser.add_argument_group()
     random_group.add_argument("--threads", type=int, default=8)
+    random_group.add_argument("--complete_req", action="store_true")
 
     template_group = parser.add_argument_group()
     template = template_group.add_mutually_exclusive_group(required=True)

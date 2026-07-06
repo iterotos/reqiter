@@ -55,8 +55,6 @@ def main():
                 with lock:
                     result["found"] = True
                     result["combination"] = data
-                    if result["combination"].get("length"):
-                        result["combination"].pop("length")
                 stop_event.set()
             if p is not None:
                 p.update(1)
@@ -110,12 +108,22 @@ def main():
     loud_print("\nFinishing...", (args.quiet, args.json), end=" ")
 
     if args.json:
+        if args.complete_req:
+            result["request"] = template.format(**result['combination'])
         json.dump(result, sys.stdout)
     elif not result["found"]:
         print("Failure: All candidates were unsuccessful.")
     elif result["combination"]:
         loud_print("Success! The current combination is:", (args.quiet, args.json))
-        print(result['combination'])
+        rescomb = result['combination']
+        if args.complete_req:
+            print("\n---BEGIN PAYLOAD---\n")
+            print(template.format(**result['combination']))
+            print("\n---END PAYLOAD---")
+        else:
+            if isinstance(rescomb, dict) and rescomb.get("length"):
+                rescomb.pop("length")
+            print(result['combination'])
     sys.exit(0)
 
 if __name__ == "__main__":
