@@ -33,7 +33,7 @@ def main():
         throw_error(f"the following arguments are required: {', '.join(args_list)}", code=2)
 
     stop_event = threading.Event()
-    work_queue = queue.Queue(maxsize=100)
+    work_queue: queue.Queue[dict[str, str]] = queue.Queue(maxsize=100)
 
     def worker():
         while not stop_event.is_set():
@@ -55,6 +55,8 @@ def main():
                 with lock:
                     result["found"] = True
                     result["combination"] = data
+                    if result["combination"].get("length"):
+                        result["combination"].pop("length")
                 stop_event.set()
             if p is not None:
                 p.update(1)
