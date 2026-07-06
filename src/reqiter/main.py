@@ -1,6 +1,6 @@
 from reqiter.parser import init_parser
 from reqiter.utils import (read_if_first_else_second, parse_pairs, length_check,
-                              loud_print, detect_keys, throw_error, return_fields)
+                              loud_print, detect_keys, throw_error)
 from reqiter.objects import RequestData, ResponseData
 from reqiter.bash import bash
 from itertools import product, cycle
@@ -21,9 +21,8 @@ def main():
     keys = pairs.keys()
     values = pairs.values()
 
-    fields = return_fields(template)
-    template_keys = detect_keys(template, fields)
-    length = length_check(template, fields)
+    template_keys = detect_keys(template)
+    length = length_check(template)
     if "length" in template_keys:
         template_keys.remove("length")
     else:

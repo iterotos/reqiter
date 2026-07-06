@@ -47,19 +47,20 @@ def loud_print(text, quiet: tuple[bool, bool], end=None):
 
 def return_fields(template: str):
     formatter = Formatter()
-    data: list[tuple] = []
+    data: list[tuple[str, str | None, str | None, str | None]] = []
     for field in formatter.parse(template):
         data.append(field)
     return data
 
-def detect_keys(template: str, fields: tuple[str, str | None, str | None, str | None]):
+def detect_keys(template: str):
+    fields = return_fields(template)
     field_names = set()
     for literal_text, field_name, format_spec, conversion in fields:
         if field_name:
             field_names.add(field_name)
     return field_names
 
-def length_check(template: str, fields: tuple[str, str | None, str | None, str | None]):
+def length_check(template: str):
     lines = template.splitlines()
     if not lines[0].strip().endswith("HTTP/1.1"):
         throw_error("template is not a HTTP/1.1 request", code=2)
