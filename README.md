@@ -32,6 +32,8 @@ But for it to be useful, it should also include parameters in the header/body to
 ```http
 {{"username":"{user}","password":"{password}"}}
 ```
+**Note:** If you would like to use curly braces (such as for JSON), please use double curly braces. Single curly braces will be interpreted as params.
+
 By passing arguments `-user` and `-password`, you may specify what to substitute these parameters with. Parameters take the following forms:
 - `-param str:test` The str: prefix denotes a raw string. If the string contains newlines, it will be split into lines and iterated through.
 - `-param file:path` The file: prefix denotes a filepath that can be read from. Similarly, if it contains newlines, it will also be iterated through.
