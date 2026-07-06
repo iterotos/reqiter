@@ -46,5 +46,5 @@ Example usage, targeting `localhost:3000`, accepting any http response code begi
 
 ## Limitations
 As mentioned before, Reqiter is just a small project aiming for ease-of-use. As such, it **cannot** do the following:
-- **Send non HTTP/1.1 requests.** Due to the underlying library being `sockets`, it could technically send others. However, the `-c`/`--code_prefix` option would break, so you'll be stuck with the other success conditions. Also, it has not been tested with non HTTP/1.1 requests and support is not planned either.
+- **Send non HTTP/1.1 requests.** Due to the underlying library being `sockets`, it could technically send others. However, it has not been tested with non HTTP/1.1 requests and support is not planned either. It will probably break if given a non HTTP/1.1 request.
 - **Attack real endpoints.** Reqiter is not built for that sort of task. It does not aim to provide extremely high performance/throughput, and it's defaults are on the polite end (8 threads). It also does not take any possible endpoint security measures into account.
