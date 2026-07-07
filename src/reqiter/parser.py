@@ -34,7 +34,7 @@ def init_parser():
                         action="store_true")
     
     param_group = parser.add_argument_group()
-    param_group.add_argument("-l", "--limit", type=int, default=20, help="Limits the number of generated regex patterns.")
+    param_group.add_argument("-l", "--limit", type=int, default=20, help="limits the number of generated regex patterns")
 
     parser.add_argument("replacements", nargs=argparse.REMAINDER, help=
         "list pairs of replacing values and what to replace them with"
