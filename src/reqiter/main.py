@@ -1,6 +1,7 @@
 from reqiter.parser import init_parser
-from reqiter.utils import (read_if_first_else_second, parse_pairs, length_check,
+from reqiter.utils import (read_if_first_else_second, length_check,
                               loud_print, detect_keys, throw_error)
+from reqiter.params import parse_pairs
 from reqiter.objects import RequestData, ResponseData
 from reqiter.bash import bash
 from itertools import product, cycle
@@ -17,7 +18,7 @@ def main():
     is_tty = sys.stdout.isatty()
 
     template: str = read_if_first_else_second(args.templatefile, args.template)
-    pairs = parse_pairs(args.replacements, (args.quiet, args.json))
+    pairs = parse_pairs(args.replacements, (args.quiet, args.json), args.limit)
     keys = pairs.keys()
     values = pairs.values()
 

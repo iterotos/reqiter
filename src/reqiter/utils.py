@@ -13,37 +13,9 @@ def read_if_first_else_second(first: str, second: str) -> str:
         throw_error(f"file {first} not found")
         exit()
 
-def parse_pairs(pairs: list[str], quietness: tuple[bool, bool]) -> dict[str, list[str]]:
-    if len(pairs)%2==1:
-        throw_error("odd number of replacement arguments", code=2)
-    result: dict[str, list[str]] = {}
-    for i in range(0, len(pairs), 2):
-        if pairs[i][0]!="-":
-            throw_error(f"replacement arguments are malformed", code=2)
-        param_name=pairs[i][1:] # strip the dash
-        content=pairs[i+1]
-        if content.startswith("str:"):
-            result[param_name] = content[4:].splitlines()   # first four chars are str:
-        elif content.startswith("file:"):
-            try:
-                with open(content[5:], "rb", buffering=1024*1024) as file:    # first five chars are file:
-                    if not quietness[0] and not quietness[1]:
-                        print(f"Reading file \"{content[5:]}\"...", end="", flush=True)
-                    try:
-                        result[param_name] = file.read().decode("iso-8859-1").splitlines()
-                    except:
-                        print()
-                        throw_error(f"Reading of file {content[5:]} cancelled. Exiting.")
-                    loud_print(" done!", quietness)
-            except FileNotFoundError as e:
-                throw_error(f"file {content[5:]} not found")
-        else:
-            throw_error(f"replacement arguments are malformed", code=2)
-    return result
-
-def loud_print(text, quiet: tuple[bool, bool], end=None):
+def loud_print(text, quiet: tuple[bool, bool], end = None, flush:bool = False):
     if not quiet[0] and not quiet[1]:
-        print(text, end=end)
+        print(text, end=end, flush=flush)
 
 def return_fields(template: str):
     formatter = Formatter()
