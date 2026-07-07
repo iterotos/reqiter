@@ -37,14 +37,19 @@ But for it to be useful, it should also include parameters in the header/body to
 By passing arguments `-user` and `-password`, you may specify what to substitute these parameters with. Parameters take the following forms:
 - `-param str:test` The str: prefix denotes a raw string. If the string contains newlines, it will be split into lines and iterated through.
 - `-param file:path` The file: prefix denotes a filepath that can be read from. Similarly, if it contains newlines, it will also be iterated through.
+- `-param regex:pattern` The regex: prefix will take in a regex pattern and will attempt to generate all matching patterns up to a limit (can be changed with the -l option, default 20).
 
-A `regex:` option expanding non-infinite regexes and a `range:` option functioning similarly to a for loop are planned.
+A `range:` option functioning similarly to a for loop is planned.
 
 ## Examples
 ```sh
 reqiter -t template.txt -c 2 localhost 3000 -user str:admin -password file:rockyou.txt
 ```
-Example usage, targeting `localhost:3000`, accepting any http response code beginning with 2, trying a request for every password in `rockyou.txt` with the user `admin`.
+Example usage, targeting `localhost:3000`, accepting any http response code beginning with 2, trying a request for every password in `rockyou.txt` with the user `admin`, `admin0`, `admin1` and so on.
+```sh
+reqiter -t template.txt -c 2 localhost 3000 -user "regex:admin[0-9]?" -password file:rockyou.txt
+```
+Another example, now with the user `admin`, `admin0`, `admin1` and so on using regex.
 
 ## Limitations
 As mentioned before, Reqiter is just a small project aiming for ease-of-use. As such, it **cannot** do the following:
